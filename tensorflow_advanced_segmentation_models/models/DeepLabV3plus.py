@@ -59,8 +59,9 @@ class DeepLabV3plus(tf.keras.Model):
         if training is None:
             training = True
 
-        x = self.backbone(inputs)[-1]
-        low_level_features = self.backbone(inputs)[1]
+        backbone_out = self.backbone(inputs)
+        x = backbone_out[-1]
+        low_level_features = backbone_out[1]
         
         # Encoder Module
         encoder = self.atrous_sepconv_bn_relu_1(x, training)
