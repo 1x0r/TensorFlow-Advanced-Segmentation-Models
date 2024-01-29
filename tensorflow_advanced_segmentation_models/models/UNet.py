@@ -37,7 +37,7 @@ class UNet(tf.keras.Model):
 
         self.final_conv3x3 = tf.keras.layers.Conv2D(self.n_classes, (3, 3), strides=(1, 1), padding='same')
 
-        self.final_activation = tf.keras.layers.Activation(final_activation)
+        self.final_activation = tf.keras.layers.Activation(final_activation, dtype="float32")
 
     def call(self, inputs, training=None, mask=None):
         if training is None:
