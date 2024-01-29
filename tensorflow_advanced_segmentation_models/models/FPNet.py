@@ -94,11 +94,11 @@ class FPNet(tf.keras.models.Model):
         elif self.aggregation == "concat":
             x = self.concat([s2, s3, s4, s5])
         else:
-            raise ValueError("Aggregation parameter should be one of ['sum', 'concat'], got {}".format(aggregation))
+            raise ValueError("Aggregation parameter should be one of ['sum', 'concat'], got {}".format(self.aggregation))
 
         if self.dropout is not None:
             if self.dropout >= 1 or self.dropout < 0:
-                raise ValueError("'dropout' must be between 0 and 1, got {}".format(dropout))
+                raise ValueError("'dropout' must be between 0 and 1, got {}".format(self.dropout))
             else:
                 x = self.spatial_dropout(x, training=training)
 
