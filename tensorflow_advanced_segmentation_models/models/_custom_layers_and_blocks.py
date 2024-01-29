@@ -140,8 +140,8 @@ class AtrousSeparableConvolutionBnReLU(tf.keras.layers.Layer):
     """
     def __init__(self, filters, kernel_size, strides=[1, 1, 1, 1], padding="SAME", data_format=None,
                  dilation=None, channel_multiplier=1, axis=-1, momentum=0.99, epsilon=0.001,
-                 center=True, scale=True, trainable=True, post_activation=None, block_name=None):
-        super(AtrousSeparableConvolutionBnReLU, self).__init__()
+                 center=True, scale=True, trainable=True, post_activation=None, block_name=None, **kwargs):
+        super(AtrousSeparableConvolutionBnReLU, self).__init__(**kwargs)
 
         self.filters = filters
         self.kernel_size = kernel_size
@@ -214,8 +214,8 @@ class AtrousSeparableConvolutionBnReLU(tf.keras.layers.Layer):
 class AtrousSpatialPyramidPoolingV3(tf.keras.layers.Layer):
     """
     """
-    def __init__(self, atrous_rates, filters):
-        super(AtrousSpatialPyramidPoolingV3, self).__init__()
+    def __init__(self, atrous_rates, filters, **kwargs):
+        super(AtrousSpatialPyramidPoolingV3, self).__init__(**kwargs)
         self.filters = filters
 
         # adapt scale and mometum for bn
@@ -297,8 +297,8 @@ class Upsample_x2_Block(tf.keras.layers.Layer):
 class Upsample_x2_Add_Block(tf.keras.layers.Layer):
     """
     """
-    def __init__(self, filters):
-        super(Upsample_x2_Add_Block, self).__init__()
+    def __init__(self, filters, **kwargs):
+        super(Upsample_x2_Add_Block, self).__init__(**kwargs)
 
         self.upsample2d_size2 = tf.keras.layers.UpSampling2D(size=2, interpolation="bilinear")
         self.conv1x1_bn_relu = tf.keras.layers.Conv2D(filters, kernel_size=(1, 1), padding="same")
@@ -315,8 +315,8 @@ class Upsample_x2_Add_Block(tf.keras.layers.Layer):
         return [input_shape[0], input_shape[1] * 2, input_shape[2] * 2, input_shape[3]]
 
 class SpatialContextBlock(tf.keras.layers.Layer):
-    def __init__(self, level, filters=256, pooling_type="avg"):
-        super(SpatialContextBlock, self).__init__()
+    def __init__(self, level, filters=256, pooling_type="avg", **kwargs):
+        super(SpatialContextBlock, self).__init__(**kwargs)
 
         self.level = level
         self.filters = filters
@@ -350,8 +350,8 @@ class SpatialContextBlock(tf.keras.layers.Layer):
         return input_shape
 
 class FPNBlock(tf.keras.layers.Layer):
-    def __init__(self, filters):
-        super(FPNBlock, self).__init__()
+    def __init__(self, filters, **kwargs):
+        super(FPNBlock, self).__init__(**kwargs)
 
         self.filters = filters
         self.input_filters = None
@@ -377,8 +377,8 @@ class FPNBlock(tf.keras.layers.Layer):
         return x
 
 class AtrousSpatialPyramidPoolingV1(tf.keras.layers.Layer):
-    def __init__(self, filters):
-        super(AtrousSpatialPyramidPoolingV1, self).__init__()
+    def __init__(self, filters, **kwargs):
+        super(AtrousSpatialPyramidPoolingV1, self).__init__(**kwargs)
 
         self.filters = filters
         
@@ -405,8 +405,8 @@ class AtrousSpatialPyramidPoolingV1(tf.keras.layers.Layer):
         return x
 
 class Base_OC_Module(tf.keras.layers.Layer):
-    def __init__(self, filters):
-        super(Base_OC_Module, self).__init__()
+    def __init__(self, filters, **kwargs):
+        super(Base_OC_Module, self).__init__(**kwargs)
 
         self.filters = filters
 
@@ -425,8 +425,8 @@ class Base_OC_Module(tf.keras.layers.Layer):
         return x
 
 class Pyramid_OC_Module(tf.keras.layers.Layer):
-    def __init__(self, levels, filters=256, pooling_type="avg"):
-        super(Pyramid_OC_Module, self).__init__()
+    def __init__(self, levels, filters=256, pooling_type="avg", **kwargs):
+        super(Pyramid_OC_Module, self).__init__(**kwargs)
 
         self.levels = levels
         self.filters = filters
@@ -501,8 +501,8 @@ class Pyramid_OC_Module(tf.keras.layers.Layer):
         return x
 
 class ASP_OC_Module(tf.keras.layers.Layer):
-    def __init__(self, filters, dilations):
-        super(ASP_OC_Module, self).__init__()
+    def __init__(self, filters, dilations, **kwargs):
+        super(ASP_OC_Module, self).__init__(**kwargs)
         self.filters = filters
         self.dilations = dilations
 
@@ -535,8 +535,8 @@ class ASP_OC_Module(tf.keras.layers.Layer):
 
 
 class PAM_Module(tf.keras.layers.Layer):
-    def __init__(self, filters):
-        super(PAM_Module, self).__init__()
+    def __init__(self, filters, **kwargs):
+        super(PAM_Module, self).__init__(**kwargs)
 
         self.filters = filters
 
@@ -597,8 +597,8 @@ class PAM_Module(tf.keras.layers.Layer):
         return out
 
 class CAM_Module(tf.keras.layers.Layer):
-    def __init__(self, filters):
-        super(CAM_Module, self).__init__()
+    def __init__(self, filters, **kwargs):
+        super(CAM_Module, self).__init__(**kwargs)
 
         self.filters = filters
 
@@ -648,8 +648,8 @@ class CAM_Module(tf.keras.layers.Layer):
 
 
 class SelfAttentionBlock2D(tf.keras.layers.Layer):
-    def __init__(self, filters):
-        super(SelfAttentionBlock2D, self).__init__()
+    def __init__(self, filters, **kwargs):
+        super(SelfAttentionBlock2D, self).__init__(**kwargs)
 
         self.filters = filters
 
@@ -702,8 +702,8 @@ class SelfAttentionBlock2D(tf.keras.layers.Layer):
         return x
 
 class GlobalPooling(tf.keras.layers.Layer):
-    def __init__(self, filters):
-        super(GlobalPooling, self).__init__()
+    def __init__(self, filters, **kwargs):
+        super(GlobalPooling, self).__init__(**kwargs)
         self.filters = filters
 
         self.conv1x1_bn_relu = ConvolutionBnActivation(filters, (1, 1))
@@ -723,8 +723,8 @@ class GlobalPooling(tf.keras.layers.Layer):
         return glob_avg_pool
 
 class MixtureOfSoftMaxACF(tf.keras.layers.Layer):
-    def __init__(self, d_k, att_dropout=0.1):
-        super(MixtureOfSoftMaxACF, self).__init__()
+    def __init__(self, d_k, att_dropout=0.1, **kwargs):
+        super(MixtureOfSoftMaxACF, self).__init__(**kwargs)
         self.temperature = tf.cast(tf.math.pow(tf.cast(d_k, self.dtype), 0.5), self.dtype)
         self.att_dropout = att_dropout
         
@@ -774,8 +774,8 @@ class MixtureOfSoftMaxACF(tf.keras.layers.Layer):
 
 class AggCF_Module(tf.keras.layers.Layer):
     def __init__(self, filters, kq_transform="conv", value_transform="conv",
-                 pooling=True, concat=False, dropout=0.1):
-        super(AggCF_Module, self).__init__()
+                 pooling=True, concat=False, dropout=0.1, **kwargs):
+        super(AggCF_Module, self).__init__(**kwargs)
         self.filters = filters
         self.kq_transform = kq_transform
         self.value_transform = value_transform
@@ -895,8 +895,8 @@ class AggCF_Module(tf.keras.layers.Layer):
         return out
 
 class SpatialGather_Module(tf.keras.layers.Layer):
-    def __init__(self, scale=1):
-        super(SpatialGather_Module, self).__init__()
+    def __init__(self, scale=1, **kwargs):
+        super(SpatialGather_Module, self).__init__(**kwargs)
 
         self.scale = scale
 
@@ -926,8 +926,8 @@ class SpatialGather_Module(tf.keras.layers.Layer):
         return ocr_context
 
 class ObjectAttentionBlock2D(tf.keras.layers.Layer):
-    def __init__(self, filters, scale=1.0):
-        super(ObjectAttentionBlock2D, self).__init__()
+    def __init__(self, filters, scale=1.0, **kwargs):
+        super(ObjectAttentionBlock2D, self).__init__(**kwargs)
         self.filters = filters
         self.scale = scale
 
@@ -1002,8 +1002,8 @@ class ObjectAttentionBlock2D(tf.keras.layers.Layer):
         
 
 class SpatialOCR_Module(tf.keras.layers.Layer):
-    def __init__(self, filters, scale=1.0, dropout=0.1):
-        super(SpatialOCR_Module, self).__init__()
+    def __init__(self, filters, scale=1.0, dropout=0.1, **kwargs):
+        super(SpatialOCR_Module, self).__init__(**kwargs)
         self.filters = filters
         self.scale = scale
         self.dropout = dropout
@@ -1027,8 +1027,8 @@ class SpatialOCR_Module(tf.keras.layers.Layer):
         
 
 class SpatialOCR_ASP_Module(tf.keras.layers.Layer):
-    def __init__(self, filters, scale=1, dropout=0.1, dilations=(12, 24, 36)):
-        super(SpatialOCR_ASP_Module, self).__init__()
+    def __init__(self, filters, scale=1, dropout=0.1, dilations=(12, 24, 36), **kwargs):
+        super(SpatialOCR_ASP_Module, self).__init__(**kwargs)
         self.filters = filters
         self.scale = scale
         self.dropout = dropout
@@ -1066,8 +1066,8 @@ class SpatialOCR_ASP_Module(tf.keras.layers.Layer):
 
 
 class AttCF_Module(tf.keras.layers.Layer):
-    def __init__(self, filters):
-        super(AttCF_Module, self).__init__()
+    def __init__(self, filters, **kwargs):
+        super(AttCF_Module, self).__init__(**kwargs)
 
         self.filters = filters
 
@@ -1121,8 +1121,8 @@ class AttCF_Module(tf.keras.layers.Layer):
 
 
 class BasicBlock(tf.keras.layers.Layer):
-    def __init__(self, filters):
-        super(BasicBlock, self).__init__()
+    def __init__(self, filters, **kwargs):
+        super(BasicBlock, self).__init__(**kwargs)
 
         self.conv3x3_bn_relu = ConvolutionBnActivation(filters, (3, 3), momentum=0.1)
         self.conv3x3_bn = ConvolutionBnActivation(filters, (3, 3), momentum=0.1, post_activation="linear")
@@ -1142,8 +1142,8 @@ class BasicBlock(tf.keras.layers.Layer):
 
 
 class BottleneckBlock(tf.keras.layers.Layer):
-    def __init__(self, filters, downsample=False, expansion=4):
-        super(BottleneckBlock, self).__init__()
+    def __init__(self, filters, downsample=False, expansion=4, **kwargs):
+        super(BottleneckBlock, self).__init__(**kwargs)
 
         self.ds = downsample
 
@@ -1173,9 +1173,9 @@ class BottleneckBlock(tf.keras.layers.Layer):
 
 
 class HighResolutionModule(tf.keras.layers.Layer):
-    def __init__(self, num_branches, blocks, filters):
+    def __init__(self, num_branches, blocks, filters, **kwargs):
         # filters_in unnecessary since it equals filters
-        super(HighResolutionModule, self).__init__()
+        super(HighResolutionModule, self).__init__(**kwargs)
 
         self.num_branches = num_branches
         self.filters = filters

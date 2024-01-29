@@ -11,7 +11,7 @@ class PSPNet(tf.keras.models.Model):
     def __init__(self, n_classes, base_model, output_layers, height=None, width=None, filters=256,
                  final_activation="softmax", backbone_trainable=False,
                  dropout=None, pooling_type="avg", final_upsample_factor=2, **kwargs):
-        super(PSPNet, self).__init__()
+        super(PSPNet, self).__init__(**kwargs)
         
         self.n_classes = n_classes
         self.backbone = None
