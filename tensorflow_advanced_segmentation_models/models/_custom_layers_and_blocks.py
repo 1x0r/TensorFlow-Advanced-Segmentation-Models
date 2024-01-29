@@ -333,7 +333,7 @@ class SpatialContextBlock(tf.keras.layers.Layer):
 
     def build(self, input_shape):
         if self.pooling_type not in ("max", "avg"):
-            raise ValueError("Unsupported pooling type - '{}'".format(pooling_type) + "Use 'avg' or 'max'")
+            raise ValueError("Unsupported pooling type - '{}'".format(self.pooling_type) + "Use 'avg' or 'max'")
 
         self.pooling2d = tf.keras.layers.MaxPool2D if self.pooling_type == "max" else tf.keras.layers.AveragePooling2D
 
@@ -461,7 +461,7 @@ class Pyramid_OC_Module(tf.keras.layers.Layer):
 
     def build(self, input_shape):
         if self.pooling_type not in ("max", "avg"):
-            raise ValueError("Unsupported pooling type - '{}'".format(pooling_type) + "Use 'avg' or 'max'")
+            raise ValueError("Unsupported pooling type - '{}'".format(self.pooling_type) + "Use 'avg' or 'max'")
 
         self.pooling2d_1 = tf.keras.layers.MaxPool2D if self.pooling_type == "max" else tf.keras.layers.AveragePooling2D
         self.pooling2d_2 = tf.keras.layers.MaxPool2D if self.pooling_type == "max" else tf.keras.layers.AveragePooling2D
@@ -939,7 +939,7 @@ class ObjectAttentionBlock2D(tf.keras.layers.Layer):
             ctx = tf.keras.layers.Permute((2, 1))(ctx)
             BS, H, W, C = feats.shape
             if self.scale > 1:
-                feats = self.pool(feats, training=training)
+                feats = self.max_pool2d(feats, training=training)
 
             query = self.f_pixel(feats, training=training)              # (BS, H, W, C)
             query = tf.keras.layers.Reshape((-1, C))(query)             # (BS, N, C)
@@ -962,7 +962,7 @@ class ObjectAttentionBlock2D(tf.keras.layers.Layer):
             # feats-dim: (BS, C, H, W) & ctx-dim: (BS, C, C2)
             BS, C, H, W = feats.shape
             if self.scale > 1:
-                feats = self.pool(feats, training=training)
+                feats = self.max_pool2d(feats, training=training)
 
             query = self.f_pixel(feats, training=training)              # (BS, C, H, W)
             query = tf.keras.layers.Reshape((C, -1))(query)             # (BS, C, N)
