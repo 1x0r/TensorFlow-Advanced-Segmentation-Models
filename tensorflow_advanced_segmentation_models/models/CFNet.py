@@ -80,7 +80,3 @@ class CFNet(tf.keras.Model):
         x = self.final_upsampling2d(x)
 
         return x
-
-    def model(self):
-        x = tf.keras.layers.Input(shape=(self.height, self.width, 3))
-        return tf.keras.Model(inputs=[x], outputs=self.call(x))
