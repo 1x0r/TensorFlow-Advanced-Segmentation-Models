@@ -4,7 +4,6 @@ import tensorflow.keras.backend as K
 ################################################################################
 # Layers
 ################################################################################
-from tensorflow.keras import activations
 
 
 class ConvolutionBnActivation(tf.keras.layers.Layer):
@@ -50,7 +49,7 @@ class ConvolutionBnActivation(tf.keras.layers.Layer):
         self.bn = None
         #tf.keras.layers.BatchNormalization(scale=False, momentum=0.9)
         # self.post_activation = tf.keras.layers.Activation(post_activation)
-        self.post_activation = activations.get(post_activation)
+        self.post_activation = tf.keras.activations.get(post_activation)
 
     def build(self, input_shape):
         self.conv = tf.keras.layers.Conv2D(
@@ -102,7 +101,7 @@ class ConvolutionBnActivation(tf.keras.layers.Layer):
             "padding": self.padding,
             "data_format": self.data_format,
             "dilation_rate": self.dilation_rate,
-            "activation": activations.serialize(self.activation),
+            "activation": tf.keras.activations.serialize(self.activation),
             "use_batchnorm": not self.use_bias,
             "kernel_initializer": self.kernel_initializer,
             "bias_initializer": self.bias_initializer,
@@ -132,7 +131,7 @@ class ConvolutionBnActivation(tf.keras.layers.Layer):
 
         # tf.keras.layers.BatchNormalization(scale=False, momentum=0.9)
         # self.post_activation = tf.keras.layers.Activation(post_activation)
-            "post_activation": activations.serialize(self.post_activation),
+            "post_activation": tf.keras.activations.serialize(self.post_activation),
         }
         base_config = super(ConvolutionBnActivation, self).get_config()
         return dict(list(base_config.items()) + list(config.items()))
