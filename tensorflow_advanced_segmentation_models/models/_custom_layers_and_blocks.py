@@ -725,7 +725,7 @@ class GlobalPooling(tf.keras.layers.Layer):
 class MixtureOfSoftMaxACF(tf.keras.layers.Layer):
     def __init__(self, d_k, att_dropout=0.1, **kwargs):
         super(MixtureOfSoftMaxACF, self).__init__(**kwargs)
-        self.temperature = tf.cast(tf.math.pow(tf.cast(d_k, self.dtype), 0.5), self.dtype)
+        self.temperature = tf.cast(tf.math.pow(tf.cast(d_k, self.dtype), 0.5), self.compute_dtype)
         self.att_dropout = att_dropout
         
         self.dropout = tf.keras.layers.Dropout(att_dropout)
