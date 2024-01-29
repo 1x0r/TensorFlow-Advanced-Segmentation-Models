@@ -49,12 +49,13 @@ class UNet(tf.keras.Model):
         else:
             conv1 = None
 
+        backbone_out = self.backbone(inputs)
         x = self.backbone(inputs)[4]
 
-        upsample = self.upsample2d_x2_block1(x, self.backbone(inputs)[3], training)
-        upsample = self.upsample2d_x2_block2(upsample, self.backbone(inputs)[2], training)
-        upsample = self.upsample2d_x2_block3(upsample, self.backbone(inputs)[1], training)
-        upsample = self.upsample2d_x2_block4(upsample, self.backbone(inputs)[0], training)
+        upsample = self.upsample2d_x2_block1(x, backbone_out[3], training)
+        upsample = self.upsample2d_x2_block2(upsample, backbone_out[2], training)
+        upsample = self.upsample2d_x2_block3(upsample, backbone_out[1], training)
+        upsample = self.upsample2d_x2_block4(upsample, backbone_out[0], training)
         upsample = self.upsample2d_x2_block5(upsample, conv1, training)
 
         x = self.final_conv3x3(upsample, training=training)

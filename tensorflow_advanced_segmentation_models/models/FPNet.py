@@ -68,12 +68,13 @@ class FPNet(tf.keras.models.Model):
         if training is None:
             training = True
 
-        x = self.backbone(inputs)[4]
+        backbone_out = self.backbone(inputs)
+        x = backbone_out[4]
 
-        p5 = self.fpn_block_p5(x, self.backbone(inputs)[3], training=training)
-        p4 = self.fpn_block_p4(p5, self.backbone(inputs)[2], training=training)
-        p3 = self.fpn_block_p3(p4, self.backbone(inputs)[1], training=training)
-        p2 = self.fpn_block_p2(p3, self.backbone(inputs)[0], training=training)
+        p5 = self.fpn_block_p5(x, backbone_out[3], training=training)
+        p4 = self.fpn_block_p4(p5, backbone_out[2], training=training)
+        p3 = self.fpn_block_p3(p4, backbone_out[1], training=training)
+        p2 = self.fpn_block_p2(p3, backbone_out[0], training=training)
          
         s5 = self.conv3x3_bn_relu_1(p5, training=training)
         s5 = self.conv3x3_bn_relu_2(s5, training=training)

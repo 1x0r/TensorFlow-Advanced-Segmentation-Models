@@ -48,13 +48,14 @@ class FCN(tf.keras.Model):
     def call(self, inputs, training=None, mask=None):
         if training is None:
             training = True
-
-        x = self.backbone(inputs)[-1]
+        
+        backbone_out = self.backbone(inputs)
+        x = backbone_out[-1]
 
         x = self.conv1x1_bn_relu(x)
 
-        upsample = self.upsample2d_x2_add_block1(x, self.backbone(inputs)[-2], training)
-        upsample = self.upsample2d_x2_add_block2(upsample, self.backbone(inputs)[-3], training)
+        upsample = self.upsample2d_x2_add_block1(x, backbone_out[-2], training)
+        upsample = self.upsample2d_x2_add_block2(upsample, backbone_out[-3], training)
 
         upsample = self.final_upsample2d(upsample)
         x = self.final_conv1x1_bn_activation(upsample, training=training)
