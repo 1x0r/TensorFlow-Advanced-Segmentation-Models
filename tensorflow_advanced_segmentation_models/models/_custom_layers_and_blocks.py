@@ -745,10 +745,10 @@ class MixtureOfSoftMaxACF(tf.keras.layers.Layer):
 
             d = d_k
 
-            q = tf.keras.layers.Reshape((N, d))(qt)          # (BS, N, d)
+            q = tf.reshape(qt, (BS, N, d))          # (BS, N, d)
             # q = tf.transpose(q, perm=[0, 2, 1])                 # (BS, d, N)
             N2 = kt_shape[1]
-            kt = tf.keras.layers.Reshape((N2, d))(kt)       # (BS, N2, d)
+            kt = tf.reshape(kt, (BS, N2, d))       # (BS, N2, d)
             # v = tf.keras.layers.transpose(vt, perm=[0, 2, 1])   # (BS, d, N2)
 
             att = tf.linalg.matmul(q, kt, transpose_b=True)     # (BS, N, N2)
@@ -763,10 +763,10 @@ class MixtureOfSoftMaxACF(tf.keras.layers.Layer):
 
             d = d_k
 
-            q = tf.keras.layers.Reshape((d, N))(qt)          # (BS, d, N)
+            q = tf.reshape(qt, (BS, d, N))          # (BS, d, N)
             # q = tf.transpose(q, perm=[0, 2, 1])                 # (BS, N, d)
             N2 = kt_shape[2]
-            kt = tf.keras.layers.Reshape((d, N2))(kt)       # (BS, d, N2)
+            kt = tf.reshape(kt, (BS, d, N2))       # (BS, d, N2)
             # v = tf.transpose(vt, perm=[0, 2, 1])                # (BS, N2, d)
 
             att = tf.linalg.matmul(q, kt, transpose_a=True)     # (BS, N, N2)
