@@ -90,7 +90,6 @@ class ConvolutionBnActivation(tf.keras.layers.Layer):
         return x
 
     def compute_output_shape(self, input_shape):
-        print(input_shape)
         return [input_shape[0], input_shape[1], input_shape[2], self.filters]
 
     def get_config(self):
@@ -210,7 +209,6 @@ class AtrousSeparableConvolutionBnReLU(tf.keras.layers.Layer):
         return x
 
     def compute_output_shape(self, input_shape):
-        print(input_shape)
         return [input_shape[0], input_shape[1], input_shape[2], self.filters]
 
 class AtrousSpatialPyramidPoolingV3(tf.keras.layers.Layer):
@@ -255,7 +253,6 @@ class AtrousSpatialPyramidPoolingV3(tf.keras.layers.Layer):
         return net
 
     def compute_output_shape(self, input_shape):
-        print(input_shape)
         return [input_shape[0], input_shape[1], input_shape[2], 256]
 
 class Upsample_x2_Block(tf.keras.layers.Layer):
@@ -287,7 +284,6 @@ class Upsample_x2_Block(tf.keras.layers.Layer):
         return x
 
     def compute_output_shape(self, input_shape):
-        print(input_shape)
         return [input_shape[0], input_shape[1] * 2, input_shape[2] * 2, input_shape[3]]
 
     def get_config(self):
@@ -316,7 +312,6 @@ class Upsample_x2_Add_Block(tf.keras.layers.Layer):
         return x
 
     def compute_output_shape(self, input_shape):
-        print(input_shape)
         return [input_shape[0], input_shape[1] * 2, input_shape[2] * 2, input_shape[3]]
 
 class SpatialContextBlock(tf.keras.layers.Layer):
@@ -748,7 +743,6 @@ class MixtureOfSoftMaxACF(tf.keras.layers.Layer):
         if K.image_data_format() == "channels_last":
             BS, N, d_k = qt_shape[0], qt_shape[1], qt_shape[2] # (BS, H * W, C)
 
-            assert d_k == self.d_k
             d = d_k
 
             q = tf.keras.layers.Reshape((N, d))(qt)          # (BS, N, d)
@@ -767,7 +761,6 @@ class MixtureOfSoftMaxACF(tf.keras.layers.Layer):
         else:
             BS, d_k, N = qt_shape[0], qt_shape[1], qt_shape[2]
 
-            assert d_k == self.d_k
             d = d_k
 
             q = tf.keras.layers.Reshape((d, N))(qt)          # (BS, d, N)
